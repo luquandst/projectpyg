@@ -6,6 +6,9 @@ import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
+import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleQuery;
+import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,5 +43,15 @@ public class SolrUtil {
         solrTemplate.commit();
 
 
+    }
+
+    //查询所有的记录
+    public void getAllItem(){
+        Query query = new SimpleQuery("*:*");
+        query.setOffset(0);         //从指定的位置开始查询
+        query.setRows(10);          //每次查询10条
+        ScoredPage<TbItem> tbItems = solrTemplate.queryForPage(query, TbItem.class);
+        List<TbItem> content = tbItems.getContent();
+        System.out.println(content);
     }
 }

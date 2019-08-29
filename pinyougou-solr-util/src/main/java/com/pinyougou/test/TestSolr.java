@@ -20,4 +20,9 @@ public class TestSolr {
         solrUtil.importItemsToSolr();
         System.out.println("导入到索引库成功....");
     }
+
+    @Test
+    public void getAll(){
+        solrUtil.getAllItem();
+    }
 }
