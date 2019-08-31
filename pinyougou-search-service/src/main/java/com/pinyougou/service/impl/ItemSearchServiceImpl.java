@@ -10,6 +10,7 @@ import com.pinyougou.search.service.ItemSearchService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.*;
@@ -38,6 +39,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
      */
     @Override
     public Map<String, Object> searchItems(Map searchMap) {
+        System.out.println("searchMap="+searchMap);
         //定义一个集合存放返回的结果
         Map<String, Object> map = new HashMap<>();
 
@@ -51,7 +53,7 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         String category = "";
         if(StringUtils.isNotBlank(searchMap.get("category")+"")){
             category = searchMap.get("category")+"";
-        }else{ // 如果没有值，就取分类的第一个值作为分类的值，得到模板id，根据模板id得到品牌及规格列表
+        } else{ // 如果没有值，就取分类的第一个值作为分类的值，得到模板id，根据模板id得到品牌及规格列表
             category = categoryList.get(0);
         }
         //将分组查询结果添加到map集合中去
@@ -131,12 +133,21 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         //添加查询条件
         if (StringUtils.isNotEmpty(searchMap.get("keywords") + "")) {
             query.addCriteria(new Criteria("item_keywords").is(searchMap.get("keywords")));
-        } else {
-            query.addCriteria(new Criteria("item_keywords"));
         }
-        //设置分页
-        query.setOffset(0);
-        query.setRows(16);
+    /*    else {
+            query.addCriteria(new Criteria("item_keywords"));
+        }*/
+
+
+        //设置分页,从页面获取分页的参数
+        //起始页面
+        Integer startPage = (Integer) searchMap.get("startPage");
+        //每页的数量
+        Integer pageSize = (Integer) searchMap.get("pageSize");
+        //开始分页
+        query.setOffset((startPage-1)*pageSize);
+        query.setRows(pageSize);
+
 
         //设置过滤查询
         //定义过滤查询条件
@@ -168,6 +179,35 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                 filterQuery.addCriteria(criteria);
             }
 
+        }
+
+        //添加价格区间的查询
+        String price = (String) searchMap.get("price");
+        if (StringUtils.isNotEmpty(price)){
+            //对价格区间按照-进行分割
+            String[] split = price.split("-");
+            //判断价格区间的范围
+            if (!split[1].equals("*")){
+                //添加条件
+                filterQuery.addCriteria(new Criteria("item_price").lessThanEqual(split[1]));
+            }
+            filterQuery.addCriteria(new Criteria("item_price").greaterThanEqual(split[0]));
+
+        }
+        //设置排序,获取排序的字段以及排序的值
+        String sort = (String) searchMap.get("sort");
+        String sortField = (String) searchMap.get("sortField");
+        if (sortField.equals("price")){
+            //按照价格进行排序
+            if (sort.equals("ASC")){
+                query.addSort(new Sort(Sort.Direction.ASC,"item_price"));
+            }else {
+                query.addSort(new Sort(Sort.Direction.DESC,"item_price"));
+            }
+        }
+        //按照更新时间进行排序
+        if (sortField.equals("updateTime")){
+            query.addSort(new Sort(Sort.Direction.DESC,"item_spec"+sort));
         }
 
         //把过滤查询和高亮查询绑定在一块
@@ -205,6 +245,13 @@ public class ItemSearchServiceImpl implements ItemSearchService {
                 }
             }
         }
+        //获取总的页面数量
+        int totalPages = tbItems.getTotalPages();
+        //获取总的记录数
+        long totalElements = tbItems.getTotalElements();
+        //将查询到所有页面总数以及总记录数添加到集合中去
+        map.put("totalPages",totalPages);
+        map.put("totalElements",totalElements);
         //将得到的高亮数据存放到集合中去
         map.put("rows", tbItems.getContent());
         //返回高亮数据

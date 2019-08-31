@@ -1,4 +1,4 @@
-app.controller("contentController",function ($scope,$controller,contentService) {
+app.controller("contentController",function ($location,$scope,$controller,contentService) {
     $controller('baseController',{$scope:$scope});//继承
 
     //定义数组存放广告列表
@@ -11,6 +11,12 @@ app.controller("contentController",function ($scope,$controller,contentService) 
                $scope.contentList[categoryId] = response;
            }
         })
+    }
+
+    //根据关键字搜索，跳转到指定搜索模块的页面
+    $scope.searchByKeywords=()=>{
+        alert("正在跳转其他模块的页面"+$scope.keywords);
+        location.href="http://localhost:9104#?keywords="+$scope.keywords;
     }
 
 })

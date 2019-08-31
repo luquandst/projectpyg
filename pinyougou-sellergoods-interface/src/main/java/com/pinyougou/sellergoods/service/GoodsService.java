@@ -3,6 +3,7 @@ package com.pinyougou.sellergoods.service;
 import com.pinyougou.group.Goods;
 import com.pinyougou.pojo.PageResult;
 import com.pinyougou.pojo.TbGoods;
+import com.sun.org.apache.xpath.internal.operations.String;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public interface GoodsService {
 	 * @return
 	 */
 	public List<TbGoods> findAll();
+
 	
 	
 	/**
