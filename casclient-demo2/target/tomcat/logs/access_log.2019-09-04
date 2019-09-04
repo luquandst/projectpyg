@@ -1,0 +1,4 @@
+0:0:0:0:0:0:0:1 - - [04/Sep/2019:15:03:01 +0800] "GET / HTTP/1.1" 302 - http-bio-9002-exec-1 25
+0:0:0:0:0:0:0:1 - - [04/Sep/2019:15:03:14 +0800] "GET /?ticket=ST-1-qrDffeYl3DepLRjh6Ob4-cas01.example.org HTTP/1.1" 302 - http-bio-9002-exec-3 166
+0:0:0:0:0:0:0:1 - - [04/Sep/2019:15:03:15 +0800] "GET /;jsessionid=AC95E4F7965B852BD594A868877DFBCB HTTP/1.1" 200 280 http-bio-9002-exec-4 557
+0:0:0:0:0:0:0:1 - - [04/Sep/2019:15:03:15 +0800] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-9002-exec-5 3

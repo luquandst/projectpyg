@@ -34,6 +34,8 @@
         <module>pinyougou-user-service</module>
         <module>pinyougou-user-web</module>
         <module>casclient-demo1</module>
+        <module>casclient-demo2</module>
+        <module>casclient-demo03</module>
     </modules>
 
 

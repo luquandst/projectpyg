@@ -6,7 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="casclient-demo03" />
         <module name="casclient-demo1" />
+        <module name="casclient-demo2" />
         <module name="freemarkedemo" />
         <module name="jmsDemo" />
         <module name="pinyou-manager-web" />
