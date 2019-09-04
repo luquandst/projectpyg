@@ -29,6 +29,11 @@
         <module>jmsDemo</module>
         <module>springjms-producer</module>
         <module>springjms-consumer</module>
+        <module>springbootDemo</module>
+        <module>pinyougou-user-interface</module>
+        <module>pinyougou-user-service</module>
+        <module>pinyougou-user-web</module>
+        <module>casclient-demo1</module>
     </modules>
 
 

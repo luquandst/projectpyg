@@ -15,7 +15,9 @@ ${linkman}><hr>
 姓名：${info.name},
 地址:${info.addr}
 <#--引用外部的模板-->
-<#include 'head.ftl'>
+<#include 'head.ftl'><hr/>
+
+
 
 </body>
 </html>

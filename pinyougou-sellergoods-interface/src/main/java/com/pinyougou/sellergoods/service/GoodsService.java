@@ -3,7 +3,8 @@ package com.pinyougou.sellergoods.service;
 import com.pinyougou.group.Goods;
 import com.pinyougou.pojo.PageResult;
 import com.pinyougou.pojo.TbGoods;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.pinyougou.pojo.TbItem;
+
 
 import java.util.List;
 
@@ -13,6 +14,14 @@ import java.util.List;
  *
  */
 public interface GoodsService {
+
+	/**
+	 * 根据商品的id和状态查询商品的信息
+	 * @param goodsIds
+	 * @param status
+	 * @return
+	 */
+	public List<TbItem> findItemListByGoodsIdandStatus(Long[] goodsIds, String status );
 
 	/**
 	 * 返回全部列表
@@ -53,7 +62,7 @@ public interface GoodsService {
 	 * 批量删除
 	 * @param ids
 	 */
-	public void delete(String[] ids);
+	public void delete(Long [] ids);
 
 	/**
 	 * 分页
@@ -64,6 +73,6 @@ public interface GoodsService {
 	public PageResult findPage(TbGoods goods, int pageNum, int pageSize);
 
 	//产品的审核
-	void updateStatus(String[] ids, String status);
+	void updateStatus(Long[] ids, String status);
 
 }

@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.sellergoods.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,32 @@ public class GoodsServiceImpl implements GoodsService {
 	private TbItemMapper itemMapper;
 	@Autowired
 	private TbItemCatMapper itemCatMapper;
-	
+
+	/**
+	 * 根据商品的id和状态查询商品的信息
+	 * @param goodsIds
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public List<TbItem> findItemListByGoodsIdandStatus(Long[] goodsIds, String status) {
+		List<Long> list = Arrays.asList(goodsIds);
+		for (Long aLong : list) {
+			System.out.println(aLong);
+		}
+		//创建一个查询实例
+		TbItemExample example = new TbItemExample();
+		//创建查询条件
+		TbItemExample.Criteria criteria = example.createCriteria();
+		//添加查询条件
+		criteria.andGoodsIdIn(list);
+		criteria.andStatusEqualTo(status);
+		//进行查询
+		List<TbItem> tbItems = itemMapper.selectByExample(example);
+		System.out.println(tbItems);
+		return tbItems;
+	}
+
 	/**
 	 * 查询全部
 	 */
@@ -161,10 +187,10 @@ public class GoodsServiceImpl implements GoodsService {
 	 * 批量删除
 	 */
 	@Override
-	public void delete(String[] ids) {
-		for(String id:ids){
+	public void delete(Long[] ids) {
+		for(Long id:ids){
 			//根据id查询出商品
-			TbGoods tbGoods = goodsMapper.selectByPrimaryKey(Long.parseLong(id));
+			TbGoods tbGoods = goodsMapper.selectByPrimaryKey(id);
 			//删除是将商品isdelete属性修改为1
 			tbGoods.setIsDelete("1");
 			goodsMapper.updateByPrimaryKey(tbGoods);
@@ -217,9 +243,9 @@ public class GoodsServiceImpl implements GoodsService {
 	 * @param status
 	 */
 	@Override
-	public void updateStatus(String[] ids, String status) {
+	public void updateStatus(Long[] ids, String status) {
 		//遍历ids数据，查询到所有good，并将该商品的状态修改为对应的状态
-		for (String id : ids) {
+		for (Long id : ids) {
 			//查询到对应的商品
 			TbGoods tbGoods = goodsMapper.selectByPrimaryKey(new Long(id));
 			//设置tbGood的状态为相应的状态

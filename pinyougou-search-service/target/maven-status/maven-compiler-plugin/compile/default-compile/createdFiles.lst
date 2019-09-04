@@ -1,1 +1,3 @@
+com\pinyougou\service\listener\MyMessageListener.class
+com\pinyougou\service\listener\MyMessageListener02.class
 com\pinyougou\service\impl\ItemSearchServiceImpl.class

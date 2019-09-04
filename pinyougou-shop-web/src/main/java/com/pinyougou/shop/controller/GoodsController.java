@@ -93,7 +93,7 @@ public class GoodsController {
 	 * @return
 	 */
 	@RequestMapping("/delete")
-	public Result delete(String [] ids){
+	public Result delete(Long [] ids){
 		try {
 			goodsService.delete(ids);
 			return new Result(true, "删除成功"); 

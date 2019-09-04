@@ -32,6 +32,19 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     private RedisTemplate redisTemplate;
 
     /**
+     * 导入数据到索引库
+     * @param list
+     */
+    @Override
+    public void importList(List list) {
+        //导入数据
+        solrTemplate.saveBeans(list);
+        //提交事务
+        solrTemplate.commit();
+        System.out.println("导入到索引库成功........");
+    }
+
+    /**
      * 查询索引库的内容，并以map的格式返回到前端
      *
      * @param searchMap
@@ -65,6 +78,23 @@ public class ItemSearchServiceImpl implements ItemSearchService {
         map.putAll(catoryMap);
 
         return map;
+
+    }
+
+    /**
+     * 从索引库中删除商品
+     * @param goodsIdList
+     */
+    @Override
+    public void deleteByGoodsIds(List goodsIdList) {
+        //创建一个查询对象
+        Query query = new SimpleQuery();
+        //创建查询条件
+        query.addCriteria(new Criteria("item_goodsid").in(goodsIdList));
+        //从索引库中删除
+        solrTemplate.delete(query);
+        //提交事务
+        solrTemplate.commit();
 
     }
 
