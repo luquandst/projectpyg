@@ -1,9 +1,0 @@
-server:
-  port: 8888
-spring:
-  activemq:
-    broker-url: tcp://192.168.25.128:61616
-sms:
-  accessKeyId: LTAI4Fp1xhR8iNZXCkKesQiA
-  accessKeySecret: m0NyvMn4fGxWZXZ7Qdst3UbwI9p0qw
-

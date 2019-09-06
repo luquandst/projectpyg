@@ -12,6 +12,9 @@
         <module name="freemarkedemo" />
         <module name="jmsDemo" />
         <module name="pinyou-manager-web" />
+        <module name="pinyougou-cart-interface" />
+        <module name="pinyougou-cart-service" />
+        <module name="pinyougou-cart-web" />
         <module name="pinyougou-common" />
         <module name="pinyougou-content-interface" />
         <module name="pinyougou-content-service" />

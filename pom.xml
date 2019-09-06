@@ -36,6 +36,9 @@
         <module>casclient-demo1</module>
         <module>casclient-demo2</module>
         <module>casclient-demo03</module>
+        <module>pinyougou-cart-service</module>
+        <module>pinyougou-cart-interface</module>
+        <module>pinyougou-cart-web</module>
     </modules>
 
 
