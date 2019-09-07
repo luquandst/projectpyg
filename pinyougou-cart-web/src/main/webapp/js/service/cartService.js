@@ -9,4 +9,14 @@ app.service("cartService",function ($http) {
     this.addCart=(itemId,num)=>{
         return $http.get("./cart/addToCart.do?itemId="+itemId+"&num="+num);
     }
+
+    //根据当前登录的用户id查询该用户的所有的地址列表
+    this.findAddressByUserId=()=>{
+        return $http.get("./address/findAddressByUserId.do");
+    }
+
+    //提交订单
+    this.submitOrder=(order)=>{
+        return $http.post("./cart/addOrder.do",order);
+    }
 })

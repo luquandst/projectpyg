@@ -244,8 +244,11 @@ public class CartServiceImpl implements CartService {
         if (cartList != null){
             for (Cart cart : cartList) {
                 //如果某个购物车的商家id与传入的商家id相等，就返回该购物车，否则就返回空
-                if (cart.getSellerId().equals(sellerId)){
-                    return cart;
+                if (cart.getSellerId()== null){
+                   cart.setSellerId("unknown");
+                    }else {
+                    if (cart.getSellerId().equals(sellerId)){
+                        return cart;}
                 }
             }
         }

@@ -6,10 +6,14 @@ import com.alibaba.fastjson.JSONArray;
 import com.pinoyougou.util.CookieUtil;
 import com.pinyougou.cart.service.CartService;
 import com.pinyougou.group.Cart;
+import com.pinyougou.order.service.OrderService;
 import com.pinyougou.pojo.Result;
+import com.pinyougou.pojo.TbOrder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +31,8 @@ public class CartController {
     private HttpServletRequest request;
     @Autowired
     private HttpServletResponse response;
+    @Reference
+    private OrderService orderService;
 
     //查看当前cookie中所有购物车集合
     @RequestMapping("/findCartList")
@@ -68,7 +74,12 @@ public class CartController {
 
     //添加商品到购物车
     @RequestMapping("/addToCart")
+    //解决跨域请求的注解(spring4.2版本之后才支持)
+    @CrossOrigin(origins = "http://localhost:9104",allowCredentials = "true")
     public Result addTbItemToCart(Long itemId,int num){
+        //设置跨域请求的解决方案
+//        response.setHeader("Access-Control-Allow-Origin", "http://localhost:9104");
+//        response.setHeader("Access-Control-Allow-Credentials", "true");
         try {
             //获取当前cookie中购物车
 //            List<Cart> cartList = findCartList();
@@ -88,6 +99,29 @@ public class CartController {
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(false,"添加到购物车失败");
+        }
+    }
+
+    /**
+     * 添加订单：添加订单到订单表，同时添加订单详情到订单详情表
+     * @param tbOrder
+     * @return
+     */
+    @RequestMapping("/addOrder")
+    public Result addOrder(@RequestBody TbOrder tbOrder){
+        System.out.println("tbOrder = " + tbOrder.toString());
+        try {
+            //获取当前登录的用户id
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            //给tbOrder添加属性
+            tbOrder.setUserId(userId);
+            tbOrder.setSourceType("2");
+            //保存到数据库
+            orderService.add(tbOrder);
+            return new Result(true,"添加成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"添加失败");
         }
     }
 }

@@ -19,8 +19,13 @@
         <module name="pinyougou-content-interface" />
         <module name="pinyougou-content-service" />
         <module name="pinyougou-dao" />
+        <module name="pinyougou-order-interface" />
+        <module name="pinyougou-order-service" />
         <module name="pinyougou-page-interface" />
         <module name="pinyougou-page-service" />
+        <module name="pinyougou-page-web" />
+        <module name="pinyougou-pay-interface" />
+        <module name="pinyougou-pay-service" />
         <module name="pinyougou-pojo" />
         <module name="pinyougou-portal-web" />
         <module name="pinyougou-search-interface" />
@@ -38,5 +43,8 @@
         <module name="springjms-producer" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="test-demo" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
