@@ -58,11 +58,11 @@ app.controller('itemController' ,function($scope,$controller ,$http){
 	//定义添加到购物车方法
 	$scope.addCart=()=>{
 		//{'withCredentials':true}：代表在前端设置可以跨域访问后台
-		$http.get("http://localhost:9107/cart/addToCart.do?itemId="+$scope.sku.id+"&num="+$scope.num,{'withCredentials':true}).success(response=>{
+		$http.get("http://localhost:9107/pay/addToCart.do?itemId="+$scope.sku.id+"&num="+$scope.num,{'withCredentials':true}).success(response=>{
 			// alert($scope.sku.id);
 			alert($scope.num);
 			if(response.success){ //如果添加购物车成功就跳转到购物车列表页面
-				location.href="http://localhost:9107/cart.html";
+				location.href="http://localhost:9107/pay.html";
 			}else{
 				alert(response.message);
 			}

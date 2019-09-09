@@ -10,6 +10,6 @@
     <!--2.配置zookeeper中的注册地址-->
     <dubbo:registry address="zookeeper://192.168.25.128:2181"/>
     <!--3.配置zookeeper中的配置所在的包名-->
-    <dubbo:annotation package="com.pinyougou.cart.service.impl"/>
+    <dubbo:annotation package="com.pinyougou.pay.service.impl"/>
 
 </beans>
